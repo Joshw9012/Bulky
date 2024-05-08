@@ -3,10 +3,10 @@
 ## Technology Stack
 - **Frontend:** Razor (HTML, CSS, JavaScript), Bootstrap
 - **Backend:** C#, .NET
-- **Database:** Azure SQL Server
+- **Database:** Azure SQL Server & Database
 - **Authentication:** Microsoft Identity@8
 - **Payment Gateway:** Stripe Integration
-- **Hosting:** Azure
+- **Hosting:** Azure, Github
 
 ## Overview
 The Bookstore Web App is an all-inclusive online platform crafted to streamline book browsing, purchasing, and management. It presents users with an intuitive interface to peruse an extensive catalog, curate personal libraries, and conduct secure transactions.
