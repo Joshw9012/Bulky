@@ -23,13 +23,15 @@ namespace BulkyWeb.Areas.Admin.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IUnitOfWork _unitofOfWork;
+        private readonly ApplicationDbContext _db;
 
-        public UserController(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, IUnitOfWork unitofOfWork)
+        public UserController(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, IUnitOfWork unitofOfWork, ApplicationDbContext db)
         {
-  
+
             _userManager = userManager;
             _roleManager = roleManager;
             _unitofOfWork = unitofOfWork;
+            _db = db;
         }
 
         public IActionResult Index()
@@ -61,13 +63,13 @@ namespace BulkyWeb.Areas.Admin.Controllers
         public IActionResult RoleManagement(RoleManagementVM roleManagementVM)
         {
 
-            string oldRole =  _userManager.GetRolesAsync(_unitofOfWork.ApplicationUser.Get(u => u.Id == roleManagementVM.ApplicationUser.Id)).GetAwaiter().GetResult().FirstOrDefault();
 
 
-            //ApplicationUser applicationUser = _db.ApplicationUsers.FirstOrDefault(u => u.Id == roleManagementVM.ApplicationUser.Id);
-            ApplicationUser applicationUser = _unitofOfWork.ApplicationUser.Get(u => u.Id == roleManagementVM.ApplicationUser.Id);
-            
-            if(!(roleManagementVM.ApplicationUser.Role==oldRole))
+            string oldRole = _userManager.GetRolesAsync(_unitofOfWork.ApplicationUser.Get(u => u.Id == roleManagementVM.ApplicationUser.Id)).GetAwaiter().GetResult().FirstOrDefault();
+
+            ApplicationUser applicationUser = _db.ApplicationUsers.Include(u => u.Company).FirstOrDefault(u => u.Id == roleManagementVM.ApplicationUser.Id);
+
+            if (!(roleManagementVM.ApplicationUser.Role==oldRole))
             {
                 //
                 if(roleManagementVM.ApplicationUser.Role==SD.Role_Company) { 
@@ -78,7 +80,6 @@ namespace BulkyWeb.Areas.Admin.Controllers
                 {
                     applicationUser.CompanyId = null;
                 }
-
 
                 _userManager.RemoveFromRoleAsync(applicationUser, oldRole).GetAwaiter().GetResult();
                 _userManager.AddToRoleAsync(applicationUser, roleManagementVM.ApplicationUser.Role).GetAwaiter().GetResult();
