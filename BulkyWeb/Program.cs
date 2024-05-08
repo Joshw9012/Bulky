@@ -94,7 +94,6 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-//session for shopping cart
 app.UseSession();
 seedDatebase();
 app.MapRazorPages();
