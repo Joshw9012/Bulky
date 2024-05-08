@@ -1,5 +1,19 @@
 # Bookstore Web App
 
+https://bulkybooksdemo.azurewebsites.net/
+
+
+Demo user accounts:
+
+Account: admin@gmail.com
+Password:admin123*
+
+Account: customer@gmail.com
+Password:Customer123*
+
+Account: Company@gmail.com
+Password:Company123*
+
 ## Technology Stack
 - **Frontend:** Razor (HTML, CSS, JavaScript), Bootstrap
 - **Backend:** C#, .NET
